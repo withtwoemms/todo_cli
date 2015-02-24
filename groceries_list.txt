@@ -1,0 +1,5 @@
+groceries List -- all items
+------------------------------
+[ ] kale
+[X] cheese
+[ ] bread
