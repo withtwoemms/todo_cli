@@ -5,39 +5,46 @@ class TodoMenu
     attr_reader :menu_items, :list_name
 
     def initialize
-        #@menu_items = ["Make new list?","Add list item","Remove list item","Complete list item","Un-complete list item"] 
-        @menu_items = {1=>"Make new list?",2=>"Add list item",3=>"Remove list item",4=>"'Complete' list item",5=>"'Un-complete' list item",6=>"Save list to file"} 
+        @menu_opts = {1=>"Make new list?",2=>"Add list item",3=>"Remove list item",4=>"'Complete' list item",5=>"'Un-complete' list item",6=>"Save list to file"} 
         display_menu
     end
 
     def display_menu
         puts "\n<<Menu Options>>"
-        @menu_items.values.each {|item|
-            puts "\t~~> [#{@menu_items.key(item)}] " + item
+        @menu_opts.values.each {|item|
+            puts "\t~~> [#{@menu_opts.key(item)}] " + item
         } 
         puts "\n...choose a menu item:"
-        choose_menu_item
+        choose_menu_opt
     end
 
-    def choose_menu_item(num=(gets.chomp.to_i))
+    def choose_menu_opt(num=(gets.chomp.to_i))
         ### finish fashioning such that choosing option 1 removes it; makes it unavailable
-        opt_new_list = @menu_items[1]
-        opt_add = @menu_items[2]
-        opt_remove = @menu_items[3]
-        opt_complete = @menu_items[4]
-        opt_uncomplete = @menu_items[5]
-        opt_save = @menu_items[6]
-        #puts "length is " + @menu_items.length.to_s
+        opt_new_list = @menu_opts[1]
+        opt_add = @menu_opts[2]
+        opt_remove = @menu_opts[3]
+        opt_complete = @menu_opts[4]
+        opt_uncomplete = @menu_opts[5]
+        opt_save = @menu_opts[6]
+        #puts "length is " + @menu_opts.length.to_s
 
         case num
-        when @menu_items.key(opt_new_list) #&& @menu_items.include?("Make new list?")
-            if @menu_items.length == 6
-            @menu_items.shift
+        when 0
+            @todo_list.print_list unless @todo_list == nil
+            if @todo_list == nil
+                puts "\tNo list yet! Make a new one :)\n"
+            elsif @todo_list.todo_items.length == 0
+                puts "[add new list items]\n" 
+            end
+            display_menu
+        when @menu_opts.key(opt_new_list) #&& @menu_opts.include?("Make new list?")
+            if @menu_opts.length == 6
+            @menu_opts.shift
             opt_new_list = nil
-            opt_add = @menu_items[2]
-            opt_remove = @menu_items[3]
-            opt_complete = @menu_items[4]
-            opt_uncomplete = @menu_items[5]
+            opt_add = @menu_opts[2]
+            opt_remove = @menu_opts[3]
+            opt_complete = @menu_opts[4]
+            opt_uncomplete = @menu_opts[5]
 
             puts "\n<<Making new list>>"
             puts "What would you like to name your new list?"
@@ -51,8 +58,8 @@ class TodoMenu
                 puts "\nOption not available. Choose another."
                 display_menu
             end
-        when @menu_items.key(opt_add)
-            if @menu_items.length == 5
+        when @menu_opts.key(opt_add)
+            if @menu_opts.length == 5
             puts "\nAdd some items to your list."
             puts "(press [enter] on empty when done)"
             while true
@@ -60,40 +67,43 @@ class TodoMenu
                 @todo_list.add_item(item)
                 if item == ""
                     @todo_list.remove_item("")
+                    puts "should have removed \"\""
                     break
                 end
             end 
             #@todo_list.add_item(name=gets.chomp)
             @todo_list.print_list
             puts "\n"
+            p @todo_list
+            puts "\n"
             display_menu
             end
-        when @menu_items.key(opt_remove)
-            if @menu_items.length == 5
+        when @menu_opts.key(opt_remove)
+            if @menu_opts.length == 5
             puts "\nRemove an Item from your list." 
             @todo_list.remove_item(name=gets.chomp)
             @todo_list.print_list
             puts "\n"
             display_menu
             end
-        when @menu_items.key(opt_complete)
-            if @menu_items.length == 5
+        when @menu_opts.key(opt_complete)
+            if @menu_opts.length == 5
             puts "\nMark an item as 'completed'" 
             @todo_list.mark_complete(name=gets.chomp)
             @todo_list.print_list
             puts "\n"
             display_menu
             end
-        when @menu_items.key(opt_uncomplete)
-            if @menu_items.length == 5
+        when @menu_opts.key(opt_uncomplete)
+            if @menu_opts.length == 5
             puts "\nMark an item as 'incomplete'" 
             @todo_list.mark_incomplete(name=gets.chomp)
             @todo_list.print_list
             puts "\n"
             display_menu
             end
-        when @menu_items.key(opt_save)
-            if @menu_items.length == 5
+        when @menu_opts.key(opt_save)
+            if @menu_opts.length == 5
             puts "\nSave your current list"
 
             file_name = "#{@list_name}_list.txt" 

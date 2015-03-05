@@ -14,8 +14,30 @@ class TodoList
     end
 
     def remove_item(name)
-        index = find_index(name)
-        @todo_items.delete_at(index)
+        # using "case/when" may be 'prettier' here
+        # need 'proper' error (raise or throw?) if not String or Fixnum
+        if /\D/.match(name) || /^$/.match(name) #name.class == String
+            #puts "!!! Received the non-digit: #{name}"
+            index = find_index(name)
+            @todo_items.delete_at(index)
+        elsif /\d/.match(name) #name.class == Fixnum
+            #puts "!!! Received the digit: #{name}"
+            remove_item_by_index(name)
+        else
+            puts "\n"
+            puts "!!! You gotta give me either the index or the list item."
+        end
+    end
+
+    def remove_item_by_index(num)
+        remove_item(find_item(num))
+    end
+
+    def find_item(num)
+        num = num.to_i
+        num -= 1
+        return @todo_items[num].name unless @todo_items == nil
+        return "...Index not in range. Please try again."
     end
 
     def find_index(name)
@@ -65,60 +87,24 @@ class TodoList
 
         header = "#{name} List -- #{kind} items\n" + "-" * 30
         puts header
-        list << header
+        list << header #may come in handy someday
 
-#        if kind == "all"
-            @todo_items.each {|item|
-                case kind
-                when "all"
-                    puts item
-                    list << item
-                when "complete"
-                    puts item if item.complete?
-                    list << item if item.complete?
-                when "incomplete"
-                    puts item if !item.complete?
-                    list << item if !item.complete?
-                end
-            }
-=begin
-        elsif kind == "completed" 
-            @todo_items.each {|item|
-                if item.complete?
-                    puts item
-                end
-            }
-        elsif kind == "incompleted"
-            @todo_items.each {|item|
-                if !item.complete?
-                    puts item
-                end
-            }
-=end
-#        end
+        @todo_items.each_with_index {|item,i|
+            # item in the block is of the TodoItem class
+            case kind
+            when "all"
+                puts "#{i+1}. " + item.to_s
+                list << item
+            when "complete"
+                puts "#{i+1}. " + item.to_s if item.complete?
+                list << item if item.complete?
+            when "incomplete"
+                puts "#{i+1}. " + item.to_s if !item.complete?
+                list << item if !item.complete?
+            end
+        }
+
         print "\n"
         return list.join("\n")
     end
 end
-
-=begin
-todo_list = TodoList.new("Groceries")
-todo_list.add_item("Milk")
-todo_list.add_item("Eggs")
-todo_list.add_item("Bread")
-
-todo_list.print_list
-
-puts todo_list.inspect
-todo_list.remove_item("Eggs")
-puts todo_list.inspect
-todo_list.add_item("Eggs")
-puts todo_list.mark_complete("Eggs")
-puts todo_list.inspect
-
-todo_list.print_list
-todo_list.print_list("incomplete")
-todo_list.print_list("complete")
-
-puts todo_list.contains?("Milk")
-=end

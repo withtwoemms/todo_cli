@@ -27,9 +27,10 @@ type something, ```<enter>```, type something else ```<enter>```, etc...
 
 ## Wishlist
 
-* Backspace/delete during addition of new entries
-* Remove item by referring to list index rather than retyping verbatim
-* Option/command to simply print list to screen
+* ~~Remove item by referring to list index rather than re-typing verbatim~~ (03/05/15)
+* ~~Option/command to simply print list to screen~~ (03/05/15)
+    * can press enter instead of entering a menu option to print list (if available)
+* Need to be able to abort a selected menu action  
 * Open list from file
 * Allow write-to-file without need for SU
 * Option to email list from program 
