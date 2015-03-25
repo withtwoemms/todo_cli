@@ -1,8 +1,7 @@
 # TODO\_CLI.rb
 
 
-I am [@withtwoemms](https://twitter.com/withtwoemms) and I have made a simple todo list program that works interactively via the command line. It is an enhancement of a [team treehouse](http://teamtreehouse.com) project courtesy of [@jseifer](https://twitter.c
-om/jseifer).
+I am [@withtwoemms](https://twitter.com/withtwoemms) and I have made a simple todo list program that works interactively via the command line. It is an enhancement of a [team treehouse](http://teamtreehouse.com) project courtesy of [@jseifer](https://twitter.com/jseifer).
 
 I will continue to update, in hopes (one day) that someone finds this useful enough to fork :)
 

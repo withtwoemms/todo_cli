@@ -88,6 +88,10 @@ class TodoMenu
             end
         when @menu_opts.key(opt_complete)
             if @menu_opts.length == 5
+                puts @out_of_bounds
+                if @out_of_bounds == true
+                    display_menu
+                end
             puts "\nMark an item as 'completed'" 
             @todo_list.mark_complete(name=gets.chomp)
             @todo_list.print_list

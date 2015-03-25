@@ -1,5 +1,5 @@
 groceries List -- all items
 ------------------------------
+[X] chips
+[X] salsa
 [ ] kale
-[X] cheese
-[ ] bread

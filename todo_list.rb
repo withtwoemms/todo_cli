@@ -2,11 +2,12 @@ require "./todo_item"
 
 class TodoList
 
-    attr_reader :name, :todo_items
+    attr_reader :name, :todo_items, :out_of_bounds
 
     def initialize(name)
         @name = name
         @todo_items = []
+        @out_of_bounds = false
     end
 
     def add_item(name)
@@ -26,11 +27,43 @@ class TodoList
         else
             puts "\n"
             puts "!!! You gotta give me either the index or the list item."
+            puts "\n"
+            
+        end
+    end
+
+=begin ---ORIGINAL---
+    def mark_complete(name)
+        this_item = find_index(name)
+        if this_item == nil
+            puts "...item not listed..."
+        else #/\D/.match(name) || /^$/.match(name)
+            @todo_items[this_item].mark_complete!
+        end
+    end
+=end
+
+    def mark_complete(name)
+        this_item = find_index(name)
+        #if this_item == nil
+        #    puts "...item not listed..."
+        if /\D/.match(name) || /^$/.match(name)
+            @todo_items[this_item].mark_complete!
+        elsif /\d/.match(name)
+            complete_item_by_index(name)
+        else
+            puts "\n"
+            puts "!!! You gotta give me either the index or the list item."
+            @out_of_bounds = true
         end
     end
 
     def remove_item_by_index(num)
         remove_item(find_item(num))
+    end
+
+    def complete_item_by_index(num)
+        mark_complete(find_item(num))
     end
 
     def find_item(num)
@@ -64,15 +97,6 @@ class TodoList
         end
     end
     
-    def mark_complete(name)
-        this_item = find_index(name)
-        if this_item == nil
-            puts "...item not listed..."
-        else
-        @todo_items[this_item].mark_complete!
-        end
-    end
-
     def mark_incomplete(name)
         this_item = find_index(name)
         if this_item == nil
